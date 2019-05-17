@@ -9,5 +9,8 @@ import (
 // Build creates the HTTP handler to serve the website.
 func Build() http.Handler {
 	r := mux.NewRouter()
+
+	serveStaticFiles(r)
+
 	return r
 }
