@@ -106,7 +106,7 @@ textarea, select, input, button {
 .header > .search .material-icons {
     display: inline-block;
     float: left;
-    margin: -32pt 12pt;
+    margin: -33pt 12pt;
     color: darkgray;
     pointer-events: none;
 }
