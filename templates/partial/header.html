@@ -1,0 +1,23 @@
+{{ define "header" }}
+    <div class="header">
+        <div class="logo">
+            <a href="/">
+                <h1>گوفرز</h1>
+            </a>
+        </div>
+        <div class="search">
+            <form method="get" action="/search">
+                <input name="query" type="text" placeholder="جستجو در گوفرز">
+                <i class="material-icons">search</i>
+            </form>
+        </div>
+        <div class="buttons">
+            <a href="/inbox"><i class="material-icons">mail</i></a>
+            <a href="/notifications"><i class="material-icons">notifications</i></a>
+        </div>
+        <div class="profile">
+            <a href="/register">ثبت نام</a>
+            <a href="/login">ورود</a>
+        </div>
+    </div>
+{{ end }}
