@@ -2,12 +2,12 @@
     <div class="header">
         <div class="logo">
             <a href="/">
-                <h1>گوفرز</h1>
+                <h1>{{ "title" | trans }}</h1>
             </a>
         </div>
         <div class="search">
             <form method="get" action="/search">
-                <input name="query" type="text" placeholder="جستجو در گوفرز">
+                <input name="query" type="text" placeholder="{{ "search-in-gophers" | trans }}">
                 <i class="material-icons">search</i>
             </form>
         </div>
@@ -16,8 +16,8 @@
             <a href="/notifications"><i class="material-icons">notifications</i></a>
         </div>
         <div class="profile">
-            <a href="/register">ثبت نام</a>
-            <a href="/login">ورود</a>
+            <a href="/register">{{ "sign-up" | trans }}</a>
+            <a href="/login">{{ "sign-in" | trans }}</a>
         </div>
     </div>
 {{ end }}

@@ -17,6 +17,7 @@ COPY --from=builder /go/bin/server /bin/server
 
 COPY static    /usr/share/static
 COPY templates /usr/share/templates
+COPY config    /usr/share/config
 
 COPY .docker/docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
