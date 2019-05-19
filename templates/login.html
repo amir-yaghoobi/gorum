@@ -7,7 +7,16 @@
         {{ template "header" }}
         {{ template "navigation" }}
         <div class="content">
-            <!-- contents are here -->
+            <form class="form" method="post" action="/login">
+                <input type="text" name="username" placeholder="{{ "username" | trans }}">
+                <input type="password" name="password" placeholder="{{ "password" | trans }}">
+                <input type="checkbox" id="remember-me" name="rememberMe">
+                <label for="remember-me">{{ "remember-me" | trans}}</label>
+                <div class="button-group">
+                    <button type="submit">{{ "sign-in" | trans }}</button>
+                    <button type="reset">{{ "reset" | trans }}</button>
+                </div>
+            </form>
         </div>
         {{ template "footer" }}
     </div>
