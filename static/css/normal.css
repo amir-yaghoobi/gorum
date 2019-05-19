@@ -57,8 +57,8 @@ textarea, select, input, button {
     display: block;
     color: black;
     text-decoration: none;
-    padding-top: 8pt;
-    padding-bottom: 8pt;
+    padding-top: 12pt;
+    padding-bottom: 12pt;
     padding-inline-start: 24pt;
 }
 
@@ -71,8 +71,8 @@ textarea, select, input, button {
     display: inline-block;
     vertical-align: middle;
     margin-inline-end: 1pt;
-    width: 32pt;
-    height: 32pt;
+    width: 24pt;
+    height: 24pt;
 }
 
 .header > .search {
