@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/gorilla/schema"
 )
 
 func buildAuthRoutes(r *mux.Router) {
@@ -37,7 +38,28 @@ func getRegister(w http.ResponseWriter, r *http.Request) {
 }
 
 func postRegister(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
+	body := struct {
+		Username             string `schema:"username"`
+		Email                string `schema:"email"`
+		Password             string `schema:"password"`
+		PasswordConfirmation string `schema:"password_confirmation"`
+	}{}
+
+	decoder := schema.NewDecoder()
+
+	err = decoder.Decode(&body, r.Form)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func getLogin(w http.ResponseWriter, r *http.Request) {
@@ -48,5 +70,25 @@ func getLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func postLogin(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
+	body := struct {
+		Username   string `schema:"username"`
+		Password   string `schema:"password"`
+		RememberMe bool   `schema:"remember_me"`
+	}{}
+
+	decoder := schema.NewDecoder()
+
+	err = decoder.Decode(&body, r.Form)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	http.Redirect(w, r, "/", http.StatusFound)
 }
