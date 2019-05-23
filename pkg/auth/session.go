@@ -19,6 +19,7 @@ const (
 	tokenLength = 32
 )
 
+// Session is an open session for a user.
 type Session struct {
 	ID        int64
 	UserID    int64
@@ -28,6 +29,7 @@ type Session struct {
 	ExpiresAt time.Time
 }
 
+// IsExpired retrieves whether session is expired or not.
 func (s *Session) IsExpired() bool {
 	return s.ExpiresAt.Before(time.Now())
 }
@@ -41,7 +43,7 @@ type SessionStorer interface {
 	Persist(s *Session) error
 }
 
-// UserService exposes operations can be performed on sessions.
+// SessionService exposes operations can be performed on sessions.
 type SessionService struct {
 	Storer SessionStorer
 }
