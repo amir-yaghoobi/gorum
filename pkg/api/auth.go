@@ -1,7 +1,6 @@
 package api
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -31,16 +30,21 @@ func buildAuthRoutes(r *mux.Router) {
 }
 
 func getRegister(w http.ResponseWriter, r *http.Request) {
-	err := templ.ExecuteTemplate(w, "registration", nil)
+	if isAuthenticated(r) {
+		redirect(w, r, "home")
+		return
+	}
+
+	err := services.Template.ExecuteTemplate(w, "registration", nil)
 	if err != nil {
-		log.Println(err)
+		services.Logger.Error(err)
 	}
 }
 
 func postRegister(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		log.Println(err)
+		services.Logger.Error(err)
 		return
 	}
 
@@ -55,24 +59,29 @@ func postRegister(w http.ResponseWriter, r *http.Request) {
 
 	err = decoder.Decode(&body, r.Form)
 	if err != nil {
-		log.Println(err)
+		services.Logger.Error(err)
 		return
 	}
 
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	redirect(w, r, "home")
 }
 
 func getLogin(w http.ResponseWriter, r *http.Request) {
-	err := templ.ExecuteTemplate(w, "login", nil)
+	if isAuthenticated(r) {
+		redirect(w, r, "home")
+		return
+	}
+
+	err := services.Template.ExecuteTemplate(w, "login", nil)
 	if err != nil {
-		log.Println(err)
+		services.Logger.Error(err)
 	}
 }
 
 func postLogin(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		log.Println(err)
+		services.Logger.Error(err)
 		return
 	}
 
@@ -86,9 +95,9 @@ func postLogin(w http.ResponseWriter, r *http.Request) {
 
 	err = decoder.Decode(&body, r.Form)
 	if err != nil {
-		log.Println(err)
+		services.Logger.Error(err)
 		return
 	}
 
-	http.Redirect(w, r, "/", http.StatusFound)
+	redirect(w, r, "home")
 }
