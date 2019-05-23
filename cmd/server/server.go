@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"gorum/pkg/auth"
-	"gorum/pkg/store/mem"
 	"net/http"
 	"os"
 
 	"github.com/google/logger"
 
 	"gorum/pkg/api"
+	"gorum/pkg/auth"
+	"gorum/pkg/store/mem"
 )
 
 func main() {
