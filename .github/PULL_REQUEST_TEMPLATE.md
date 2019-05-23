@@ -6,5 +6,5 @@
     + No trailing period.
     + Keep the title as short as possible.
 + No Markdown
-+ If there is a corresponding issue, add either `Fixes #XXXX` or `Updates #XXXX`.
++ If there is a corresponding issue, add either `Fixes #XXXX` or `Resolves #XXXX`.
 + Delete these instructions once you have read and applied them
