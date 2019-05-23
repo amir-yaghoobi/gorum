@@ -1,16 +1,12 @@
 package api
 
-import (
-	"net/http"
+import "net/http"
 
-	"github.com/gorilla/mux"
-)
-
-func serveStaticFiles(r *mux.Router) {
+func serveStaticFiles() {
 	staticServer := http.FileServer(http.Dir("/usr/share/static"))
 
-	r.PathPrefix("/css").Handler(staticServer)
-	r.PathPrefix("/font").Handler(staticServer)
-	r.PathPrefix("/img").Handler(staticServer)
-	r.PathPrefix("/js").Handler(staticServer)
+	services.Router.PathPrefix("/css").Handler(staticServer)
+	services.Router.PathPrefix("/font").Handler(staticServer)
+	services.Router.PathPrefix("/img").Handler(staticServer)
+	services.Router.PathPrefix("/js").Handler(staticServer)
 }

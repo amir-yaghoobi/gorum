@@ -220,7 +220,7 @@ textarea, select, input, button {
 .form {
     display: block;
     border: solid 1px darkgray;
-    border-radius: 16pt;
+    border-radius: 8pt;
     padding: 24pt;
 }
 

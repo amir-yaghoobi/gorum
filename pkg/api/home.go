@@ -1,21 +1,15 @@
 package api
 
-import (
-	"net/http"
+import "net/http"
 
-	"github.com/gorilla/mux"
-)
-
-func buildHomeRoutes(r *mux.Router) {
-	r.Path("/").
+func buildHomeRoutes() {
+	services.Router.
+		Path("/").
 		Methods(http.MethodGet).
 		HandlerFunc(getHome).
 		Name("home")
 }
 
-func getHome(w http.ResponseWriter, r *http.Request) {
-	err := services.Template.ExecuteTemplate(w, "home", nil)
-	if err != nil {
-		services.Logger.Error(err)
-	}
+func getHome(w http.ResponseWriter, _ *http.Request) {
+	view(w, "home", nil)
 }

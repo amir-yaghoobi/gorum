@@ -16,6 +16,7 @@ import (
 
 // services contains all of shared services among routes.
 var services struct {
+	Router   *mux.Router
 	Logger   *logger.Logger
 	Template *template.Template
 	User     auth.UserService
@@ -34,18 +35,17 @@ func Build(userService auth.UserService, sessionService auth.SessionService) (ht
 		return nil, err
 	}
 
-	r := mux.NewRouter()
+	services.Router.Use(authMiddleware)
 
-	r.Use(authMiddleware)
+	serveStaticFiles()
+	buildAuthRoutes()
+	buildHomeRoutes()
 
-	serveStaticFiles(r)
-	buildAuthRoutes(r)
-	buildHomeRoutes(r)
-
-	return r, nil
+	return services.Router, nil
 }
 
 func initContext(userService auth.UserService, sessionService auth.SessionService) error {
+	services.Router = mux.NewRouter()
 	services.User = userService
 	services.Session = sessionService
 	services.Logger = logger.Init("web", true, false, os.Stdout)
