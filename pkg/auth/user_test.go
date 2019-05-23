@@ -11,7 +11,7 @@ import (
 
 func TestUserService_Register(t *testing.T) {
 	service := auth.UserService{
-		Storer: &mem.UserStorer{},
+		Storer: &mem.UserStore{},
 	}
 
 	u := auth.User{}
@@ -26,7 +26,7 @@ func TestUserService_Register(t *testing.T) {
 
 func TestUserService_Authenticate(t *testing.T) {
 	service := auth.UserService{
-		Storer: &mem.UserStorer{},
+		Storer: &mem.UserStore{},
 	}
 
 	u := auth.User{}
