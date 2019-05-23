@@ -8,7 +8,7 @@ steps:
       - name: deps
         path: /go
     commands:
-      - go get github.com/golang/lint/golint
+      - go get -u golang.org/x/lint/golint
       - golint ./...
   - name: test
     image: golang:1.12
@@ -16,7 +16,7 @@ steps:
       - name: deps
         path: /go
     commands:
-      - go get
+      - go get -u
       - go test ./...
 
 volumes:
