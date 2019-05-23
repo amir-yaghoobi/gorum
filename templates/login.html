@@ -1,0 +1,25 @@
+{{ define "login" }}
+    <!DOCTYPE html>
+    <html lang="fa">
+    {{ template "head" }}
+    <body>
+    <div class="wrapper">
+        {{ template "header" }}
+        {{ template "navigation" }}
+        <div class="content">
+            <form class="form" method="post" action="/login">
+                <input type="text" name="username" placeholder="{{ "username-or-email" | trans }}">
+                <input type="password" name="password" placeholder="{{ "password" | trans }}">
+                <input type="checkbox" id="remember-me" name="remember_me">
+                <label for="remember-me">{{ "remember-me" | trans}}</label>
+                <div class="button-group">
+                    <button type="submit">{{ "sign-in" | trans }}</button>
+                    <button type="reset">{{ "reset" | trans }}</button>
+                </div>
+            </form>
+        </div>
+        {{ template "footer" }}
+    </div>
+    </body>
+    </html>
+{{ end }}

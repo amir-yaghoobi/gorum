@@ -1,0 +1,23 @@
+{{ define "header" }}
+    <div class="header">
+        <div class="logo">
+            <a href="/">
+                <img src="/img/gophers.svg" alt="Gophers">
+            </a>
+        </div>
+        <div class="search">
+            <form method="get" action="/search">
+                <input name="query" type="text" placeholder="{{ "search-in-gophers" | trans }}">
+                <i class="material-icons">search</i>
+            </form>
+        </div>
+        <div class="buttons">
+            <a href="/#"><i class="material-icons">mail</i></a>
+            <a href="/#"><i class="material-icons">notifications</i></a>
+        </div>
+        <div class="profile">
+            <a href="/register">{{ "sign-up" | trans }}</a>
+            <a href="/login">{{ "sign-in" | trans }}</a>
+        </div>
+    </div>
+{{ end }}

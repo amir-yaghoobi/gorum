@@ -1,0 +1,258 @@
+body {
+    font-family: Vazir, sans-serif;
+    direction: rtl;
+    margin: 0;
+    padding: 0;
+}
+
+textarea, select, input, button {
+    outline: none;
+}
+
+.material-icons {
+    font-family: 'Material Icons', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    vertical-align: middle;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 150pt auto 150pt;
+    grid-template-rows: auto 1fr;
+    grid-gap: 16pt;
+}
+
+.header {
+    grid-column: 1 / 4;
+    grid-row: 1 / 2;
+    display: grid;
+    grid-template-columns: 16em 1fr auto auto;
+    grid-gap: 16pt;
+    border-bottom: solid 1px darkgray;
+}
+
+.header > .logo {
+    grid-column: 1 / 2;
+}
+
+.header > .logo a {
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding-top: 12pt;
+    padding-bottom: 12pt;
+    padding-inline-start: 24pt;
+}
+
+.header > .logo a:hover {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.header > .logo img {
+    display: inline-block;
+    vertical-align: middle;
+    margin-inline-end: 1pt;
+    width: 24pt;
+    height: 24pt;
+}
+
+.header > .search {
+    grid-column: 2 / 3;
+}
+
+.header > .search input {
+    display: block;
+    width: 100%;
+    height: 32pt;
+    border: solid 1pt transparent;
+    border-bottom-width: 2pt;
+    border-radius: 8pt;
+    box-sizing: border-box;
+    font-size: 12pt;
+    margin: 8pt 0;
+    padding: 12pt;
+}
+
+.header > .search input:hover {
+    border: solid 1pt darkgray;
+    border-bottom-width: 2pt;
+}
+
+.header > .search input:focus {
+    border: solid 1pt darkgray;
+    border-bottom-width: 2pt;
+}
+
+.header > .search input::placeholder {
+    color: darkgray;
+    line-height: normal;
+}
+
+.header > .search .material-icons {
+    display: inline-block;
+    float: left;
+    margin: -33pt 12pt;
+    color: darkgray;
+    pointer-events: none;
+}
+
+.header > .buttons {
+    grid-column: 3 / 4;
+}
+
+.header > .buttons > a {
+    width: 24pt;
+    height: 24pt;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    color: darkgray;
+    border-radius: 100%;
+    font-size: 24pt;
+    padding: 4pt;
+    margin: 8pt 4pt;
+    line-height: 1;
+}
+
+.header > .buttons > a:hover {
+    background-color: #eeeeee;
+}
+
+.header > .profile {
+    grid-column: 4 / 5;
+    text-align: end;
+    padding-inline-end: 24pt;
+}
+
+.header > .profile > a {
+    display: inline-block;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 12pt;
+    padding: 8pt;
+    margin: 10pt 4pt;
+    border: solid 1pt transparent;
+    border-radius: 4pt;
+}
+
+.header > .profile > a:hover {
+    border: solid 1pt #007bff;
+}
+
+.nav {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+.nav > ul {
+    list-style: none;
+    padding-inline-start: 16pt;
+    margin: 0;
+}
+
+.nav > ul > li {
+    display: block;
+    width: 100%;
+}
+
+.nav > ul > li > a {
+    display: block;
+    text-decoration: none;
+    font-size: 12pt;
+    color: black;
+    margin: 0 0 4pt;
+    padding: 8pt 8pt;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nav > ul > li > a:hover {
+    background-color: #eeeeee;
+    color: #007bff;
+    border-radius: 4pt;
+}
+
+.footer {
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+    font-size: 10pt;
+    padding-inline-end: 24pt;
+}
+
+.footer > .copyright {
+    display: block;
+    color: darkgray;
+    padding-bottom: 16pt;
+}
+
+.footer > a {
+    font-weight: bold;
+    display: inline-block;
+    color: gray;
+    text-decoration: none;
+    padding: 3pt;
+}
+
+.content {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+.form {
+    display: block;
+    border: solid 1px darkgray;
+    border-radius: 8pt;
+    padding: 24pt;
+}
+
+.form input[type=text], input[type=password] {
+    display: block;
+    border: solid 1px darkgray;
+    border-radius: 4pt;
+    padding: 4pt 8pt;
+    margin-bottom: 8pt;
+    width: 100%;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+.form input[type=submit], button[type=submit] {
+    background-color: black;
+    color: white;
+    border: solid 1px black;
+    border-radius: 4pt;
+    padding: 6pt 16pt;
+    min-width: 80pt;
+}
+
+.form input[type=button], input[type=reset], button[type=button], button[type=reset] {
+    background-color: white;
+    color: black;
+    border: solid 1px black;
+    border-radius: 4pt;
+    padding: 6pt 16pt;
+    min-width: 80pt;
+}
+
+.form .button-group {
+    margin-top: 8pt;
+}

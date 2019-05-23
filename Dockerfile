@@ -10,8 +10,14 @@ COPY pkg pkg
 RUN CGO_ENABLED=0 go build -o /go/bin/server -v ./cmd/server
 
 FROM alpine:3.9 AS final
+ENV HOST="0.0.0.0"
+ENV PORT="80"
 
 COPY --from=builder /go/bin/server /bin/server
+
+COPY static    /usr/share/static
+COPY templates /usr/share/templates
+COPY config    /usr/share/config
 
 COPY .docker/docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]

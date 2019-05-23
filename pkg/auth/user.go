@@ -43,9 +43,6 @@ type User struct {
 }
 
 var (
-	// ErrBadCredentials reports that authentication was unsuccessful.
-	ErrBadCredentials = errors.New("authentication failed")
-
 	// ErrNoUser reports that the user could not be found.
 	ErrNoUser = errors.New("no user")
 )

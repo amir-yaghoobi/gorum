@@ -2,13 +2,21 @@ kind: pipeline
 name: default
 
 steps:
+  - name: lint
+    image: golang:1.12
+    volumes:
+      - name: deps
+        path: /go
+    commands:
+      - go get -u golang.org/x/lint/golint
+      - golint ./...
   - name: test
     image: golang:1.12
     volumes:
       - name: deps
         path: /go
     commands:
-      - go get
+      - go get -u
       - go test ./...
 
 volumes:

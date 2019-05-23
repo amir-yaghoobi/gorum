@@ -7,28 +7,28 @@ import (
 	"gorum/pkg/auth"
 )
 
-// UserStorer implements an in-memory auth.UserStorer.
-type UserStorer struct {
+// UserStore implements an in-memory auth.UserStorer.
+type UserStore struct {
 	Users  []auth.User
 	LastID int64
 }
 
 // Find implements auth.UserStorer.Find.
-func (s *UserStorer) Find(u *auth.User, id int64) error {
+func (s *UserStore) Find(u *auth.User, id int64) error {
 	return s.find(u, func(u *auth.User) bool {
 		return u.ID == id
 	})
 }
 
 // FindByName implements auth.UserStorer.FindByName.
-func (s *UserStorer) FindByName(u *auth.User, name auth.UserName) error {
+func (s *UserStore) FindByName(u *auth.User, name auth.UserName) error {
 	return s.find(u, func(u *auth.User) bool {
 		return u.Name == name
 	})
 }
 
 // ExistsByName implements auth.UserStorer.ExistsByName.
-func (s *UserStorer) ExistsByName(name auth.UserName) (bool, error) {
+func (s *UserStore) ExistsByName(name auth.UserName) (bool, error) {
 	exists := s.exists(func(u *auth.User) bool {
 		return u.Name == name
 	})
@@ -36,14 +36,14 @@ func (s *UserStorer) ExistsByName(name auth.UserName) (bool, error) {
 }
 
 // FindByEmail implements auth.UserStorer.FindByEmail.
-func (s *UserStorer) FindByEmail(u *auth.User, email auth.Email) error {
+func (s *UserStore) FindByEmail(u *auth.User, email auth.Email) error {
 	return s.find(u, func(u *auth.User) bool {
 		return u.Email == email
 	})
 }
 
 // ExistsByEmail implements auth.UserStorer.ExistsByEmail.
-func (s *UserStorer) ExistsByEmail(email auth.Email) (bool, error) {
+func (s *UserStore) ExistsByEmail(email auth.Email) (bool, error) {
 	exists := s.exists(func(u *auth.User) bool {
 		return u.Email == email
 	})
@@ -51,11 +51,7 @@ func (s *UserStorer) ExistsByEmail(email auth.Email) (bool, error) {
 }
 
 // Persist implements auth.UserStorer.Persist.
-func (s *UserStorer) Persist(u *auth.User) error {
-	if u == nil {
-		panic("user is nil")
-	}
-
+func (s *UserStore) Persist(u *auth.User) error {
 	if u.ID == 0 {
 		u.ID = s.LastID + 1
 
@@ -84,11 +80,7 @@ func (s *UserStorer) Persist(u *auth.User) error {
 	return nil
 }
 
-func (s *UserStorer) find(u *auth.User, pred func(*auth.User) bool) error {
-	if u == nil {
-		panic("user is nil")
-	}
-
+func (s *UserStore) find(u *auth.User, pred func(*auth.User) bool) error {
 	found := false
 	for idx := range s.Users {
 		if pred(&s.Users[idx]) {
@@ -106,7 +98,7 @@ func (s *UserStorer) find(u *auth.User, pred func(*auth.User) bool) error {
 	return nil
 }
 
-func (s *UserStorer) exists(pred func(*auth.User) bool) bool {
+func (s *UserStore) exists(pred func(*auth.User) bool) bool {
 	for idx := range s.Users {
 		if pred(&s.Users[idx]) {
 			return true
