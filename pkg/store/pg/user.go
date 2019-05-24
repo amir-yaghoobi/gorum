@@ -87,15 +87,24 @@ func (us *userStore) Persist(u *auth.User) error {
 		}
 
 		u.ID = model.ID
+
 		return nil
 	}
 
-	return us.db.Update(&model)
+	model.UpdatedAt = time.Now()
+
+	err := us.db.Update(&model)
+	if err != nil {
+		return err
+	}
+
+	u.UpdatedAt = model.UpdatedAt
+
+	return nil
 }
 
 func (us *userStore) findOne(u *auth.User, where string, params ...interface{}) error {
 	model := user{}
-	model.From(u)
 
 	err := us.db.Model(&model).Where(where, params...).First()
 	if err != nil {
