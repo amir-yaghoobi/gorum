@@ -4,8 +4,39 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: always
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=gorum
+      - DB_USER=postgres
+      - DB_PASS=postgres
     ports:
       - "127.0.0.1:8080:80"
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    networks:
+      - backend
+  postgres:
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=gorum
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - backend
+  adminer:
+    image: adminer:standalone
+    restart: always
+    ports:
+      - "127.0.0.1:8081:8080"
+    links:
+      - postgres
+    depends_on:
+      - postgres
     networks:
       - backend
 networks:
