@@ -7,6 +7,7 @@ require (
 	github.com/aslrousta/rand v0.2.0
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-ini/ini v1.42.0
+	github.com/go-pg/migrations v6.7.3+incompatible
 	github.com/go-pg/pg v8.0.4+incompatible
 	github.com/google/logger v1.0.1
 	github.com/gopherjs/gopherjs v0.0.0-20190430165422-3e4dfb77656c // indirect
