@@ -1,0 +1,16 @@
+{{ define "error" }}
+    {{ if . }}
+        <div class="error">
+            {{ $length := len . }}
+            {{ if eq $length 1}}
+                <span>{{ index . 0 | trans }}</span>
+            {{ else }}
+                <ul>
+                    {{ range . }}
+                        <li>{{ . | trans }}</li>
+                    {{ end }}
+                </ul>
+            {{ end }}
+        </div>
+    {{ end }}
+{{ end }}

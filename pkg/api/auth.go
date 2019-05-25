@@ -8,6 +8,42 @@ import (
 	"gorum/pkg/auth"
 )
 
+type registrationForm struct {
+	Username             string `schema:"username"`
+	Email                string `schema:"email"`
+	Password             string `schema:"password"`
+	PasswordConfirmation string `schema:"password_confirmation"`
+}
+
+func (f *registrationForm) validate() error {
+	ve := &ValidationError{}
+
+	if err := validateUsername(f.Username); err != nil {
+		ve.Errors = append(ve.Errors, err)
+	}
+
+	if err := validateEmail(f.Email); err != nil {
+		ve.Errors = append(ve.Errors, err)
+	}
+
+	if err := validatePassword(f.Password); err != nil {
+		ve.Errors = append(ve.Errors, err)
+	} else if f.Password != f.PasswordConfirmation {
+		ve.Errors = append(ve.Errors, ErrInvalidPasswordConfirmation)
+	}
+
+	if len(ve.Errors) > 0 {
+		return ve
+	}
+
+	return nil
+}
+
+type loginForm struct {
+	Username   string `schema:"username"`
+	Password   string `schema:"password"`
+}
+
 func buildAuthRoutes() {
 	services.Router.
 		Path("/register").
@@ -50,27 +86,24 @@ func postRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	body := struct {
-		Username             string `schema:"username"`
-		Email                string `schema:"email"`
-		Password             string `schema:"password"`
-		PasswordConfirmation string `schema:"password_confirmation"`
-	}{}
+	form := registrationForm{}
 
-	decoder := schema.NewDecoder()
-
-	err = decoder.Decode(&body, r.Form)
+	err = schema.NewDecoder().Decode(&form, r.Form)
 	if err != nil {
 		viewError(w, "registration", err)
 		return
 	}
 
-	// TODO validate registration form
+	err = form.validate()
+	if err != nil {
+		render(w, "registration", form, err)
+		return
+	}
 
 	var u auth.User
-	err = services.User.Register(&u, body.Username, body.Email, body.Password)
+	err = services.User.Register(&u, form.Username, form.Email, form.Password)
 	if err != nil {
-		viewError(w, "registration", err)
+		render(w, "registration", form, err)
 		return
 	}
 
@@ -93,33 +126,25 @@ func postLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	body := struct {
-		Username   string `schema:"username"`
-		Password   string `schema:"password"`
-		RememberMe bool   `schema:"remember_me"`
-	}{}
+	form := loginForm{}
 
-	decoder := schema.NewDecoder()
-
-	err = decoder.Decode(&body, r.Form)
+	err = schema.NewDecoder().Decode(&form, r.Form)
 	if err != nil {
 		viewError(w, "login", err)
 		return
 	}
 
-	// TODO validate login form
-
 	var u auth.User
-	err = services.User.Authenticate(&u, body.Username, body.Password)
+	err = services.User.Authenticate(&u, form.Username, form.Password)
 	if err != nil {
-		viewError(w, "login", err)
+		render(w, "login", form, err)
 		return
 	}
 
 	var s auth.Session
 	err = services.Session.Start(&s, u.ID)
 	if err != nil {
-		viewError(w, "login", err)
+		render(w, "login", form, err)
 		return
 	}
 

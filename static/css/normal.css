@@ -217,9 +217,23 @@ textarea, select, input, button {
     grid-row: 2 / 3;
 }
 
+.error {
+    background-color: #f8d7da;
+    border: solid 1pt #f5c6cb;
+    border-radius: 8pt;
+    color: #721c24;
+    padding: 16pt;
+    margin-bottom: 8pt;
+}
+
+.error > ul {
+    margin: 0;
+    padding-inline-start: 16pt;
+}
+
 .form {
     display: block;
-    border: solid 1px darkgray;
+    border: solid 1pt darkgray;
     border-radius: 8pt;
     padding: 24pt;
 }
