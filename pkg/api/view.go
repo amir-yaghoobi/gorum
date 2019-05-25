@@ -12,11 +12,21 @@ func viewError(w http.ResponseWriter, view string, err error) {
 
 func render(w http.ResponseWriter, view string, data interface{}, err error) {
 	vd := struct {
-		Data interface{}
-		Error string
+		Data   interface{}
+		Errors []string
 	}{
 		Data: data,
-		Error: errorMessage(err),
+	}
+
+	if err != nil {
+		switch e := err.(type) {
+		case *ValidationError:
+			for _, err := range e.Errors {
+				vd.Errors = append(vd.Errors, err.Error())
+			}
+		default:
+			vd.Errors = append(vd.Errors, err.Error())
+		}
 	}
 
 	err = services.Template.ExecuteTemplate(w, view, &vd)
@@ -25,11 +35,4 @@ func render(w http.ResponseWriter, view string, data interface{}, err error) {
 
 		w.WriteHeader(http.StatusInternalServerError)
 	}
-}
-
-func errorMessage(err error) string {
-	if err == nil {
-		return ""
-	}
-	return err.Error()
 }
