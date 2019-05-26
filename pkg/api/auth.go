@@ -10,6 +10,7 @@ import (
 
 type registrationForm struct {
 	Username             string `schema:"username"`
+	FullName             string `schema:"full_name"`
 	Email                string `schema:"email"`
 	Password             string `schema:"password"`
 	PasswordConfirmation string `schema:"password_confirmation"`
@@ -20,6 +21,10 @@ func (f *registrationForm) validate() error {
 
 	if err := validateUsername(f.Username); err != nil {
 		ve.Errors = append(ve.Errors, err)
+	}
+
+	if f.FullName == "" {
+		ve.Errors = append(ve.Errors, ErrInvalidFullName)
 	}
 
 	if err := validateEmail(f.Email); err != nil {
@@ -40,8 +45,8 @@ func (f *registrationForm) validate() error {
 }
 
 type loginForm struct {
-	Username   string `schema:"username"`
-	Password   string `schema:"password"`
+	Username string `schema:"username"`
+	Password string `schema:"password"`
 }
 
 func buildAuthRoutes() {
@@ -101,7 +106,7 @@ func postRegister(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var u auth.User
-	err = services.User.Register(&u, form.Username, form.Email, form.Password)
+	err = services.User.Register(&u, form.Username, form.FullName, form.Email, form.Password)
 	if err != nil {
 		render(w, "registration", form, err)
 		return
@@ -149,9 +154,9 @@ func postLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	cookie := http.Cookie{
-		Name:     "token",
-		Value:    s.Token,
-		Expires:  s.ExpiresAt,
+		Name:    "token",
+		Value:   s.Token,
+		Expires: s.ExpiresAt,
 	}
 	http.SetCookie(w, &cookie)
 

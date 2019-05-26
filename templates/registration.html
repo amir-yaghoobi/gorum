@@ -10,6 +10,7 @@
             {{ template "error" .Errors }}
             <form class="form" method="post" action="/register">
                 <input type="text" name="username" placeholder="{{ "username" | trans }}">
+                <input type="text" name="full_name" placeholder="{{ "full-name" | trans }}">
                 <input type="text" name="email" placeholder="{{ "email" | trans }}">
                 <input type="password" name="password" placeholder="{{ "password" | trans }}">
                 <input type="password" name="password_confirmation" placeholder="{{ "password-confirmation" | trans }}">
