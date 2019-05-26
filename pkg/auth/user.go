@@ -74,13 +74,14 @@ type UserService struct {
 }
 
 // Register creates a new user.
-func (s UserService) Register(u *User, name, email, pass string) error {
+func (s UserService) Register(u *User, name, fullName, email, pass string) error {
 	hash, err := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
 	if err != nil {
 		return err
 	}
 
 	u.Name = UserName(name)
+	u.FullName = fullName
 	u.Email = Email(email)
 	u.Secret = string(hash)
 	u.Role = Member

@@ -18,6 +18,9 @@ var (
 	// ErrDuplicateUsername reports that username is already registered.
 	ErrDuplicateUsername = errors.New("duplicate-username")
 
+	// ErrInvalidFullName reports that full name is invalid.
+	ErrInvalidFullName = errors.New("invalid-full-name")
+
 	// ErrInvalidEmail reports that email is invalid.
 	ErrInvalidEmail = errors.New("invalid-email")
 
