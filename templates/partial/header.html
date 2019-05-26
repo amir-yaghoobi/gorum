@@ -16,8 +16,13 @@
             <a href="/#"><i class="material-icons">notifications</i></a>
         </div>
         <div class="profile">
-            <a href="/register">{{ "sign-up" | trans }}</a>
-            <a href="/login">{{ "sign-in" | trans }}</a>
+            {{ if . }}
+                <span>{{ .FullName }}</span>
+                <a href="/logout">{{ "sign-out" | trans }}</a>
+            {{ else }}
+                <a href="/register">{{ "sign-up" | trans }}</a>
+                <a href="/login">{{ "sign-in" | trans }}</a>
+            {{ end }}
         </div>
     </div>
 {{ end }}

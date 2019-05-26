@@ -8,14 +8,14 @@ import (
 
 func authMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		sessionCookie, err := r.Cookie("token")
+		cookie, err := r.Cookie("token")
 		if err != nil {
 			next.ServeHTTP(w, r)
 			return
 		}
 
-		var session auth.Session
-		err = services.Session.Authenticate(&session, sessionCookie.Value)
+		var s auth.Session
+		err = services.Session.Authenticate(&s, cookie.Value)
 		if err != nil {
 			if err == auth.ErrBadCredentials {
 				next.ServeHTTP(w, r)
@@ -26,6 +26,18 @@ func authMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		next.ServeHTTP(w, authenticate(r))
+		var u auth.User
+		err = services.User.Storer.Find(&u, s.UserID)
+		if err != nil {
+			if err == auth.ErrNoUser {
+				next.ServeHTTP(w, r)
+				return
+			}
+
+			next.ServeHTTP(w, withError(r, err))
+			return
+		}
+
+		next.ServeHTTP(w, authenticate(r, &u))
 	})
 }
