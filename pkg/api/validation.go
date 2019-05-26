@@ -2,10 +2,11 @@ package api
 
 import (
 	"errors"
-	"gorum/pkg/auth"
 	"regexp"
 	"unicode"
 	"unicode/utf8"
+
+	"gorum/pkg/auth"
 )
 
 var (
