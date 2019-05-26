@@ -1,21 +1,27 @@
 package api
 
-import "net/http"
+import (
+	"net/http"
 
-func view(w http.ResponseWriter, view string, data interface{}) {
-	render(w, view, data, nil)
+	"gorum/pkg/auth"
+)
+
+func view(w http.ResponseWriter, r *http.Request, view string, data interface{}) {
+	render(w, r, view, data, nil)
 }
 
-func viewError(w http.ResponseWriter, view string, err error) {
-	render(w, view, nil, err)
+func viewError(w http.ResponseWriter, r *http.Request, view string, err error) {
+	render(w, r, view, nil, err)
 }
 
-func render(w http.ResponseWriter, view string, data interface{}, err error) {
+func render(w http.ResponseWriter, r *http.Request, view string, data interface{}, err error) {
 	vd := struct {
 		Data   interface{}
+		User   *auth.User
 		Errors []string
 	}{
 		Data: data,
+		User: requestUser(r),
 	}
 
 	if err != nil {

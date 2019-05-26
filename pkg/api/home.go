@@ -10,6 +10,6 @@ func buildHomeRoutes() {
 		Name("home")
 }
 
-func getHome(w http.ResponseWriter, _ *http.Request) {
-	view(w, "home", nil)
+func getHome(w http.ResponseWriter, r *http.Request) {
+	view(w, r, "home", nil)
 }

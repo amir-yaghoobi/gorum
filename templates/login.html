@@ -4,7 +4,7 @@
     {{ template "head" }}
     <body>
     <div class="wrapper">
-        {{ template "header" }}
+        {{ template "header" .User }}
         {{ template "navigation" }}
         <div class="content">
             {{ template "error" .Errors }}
