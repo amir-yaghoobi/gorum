@@ -15,11 +15,12 @@ func TestUserService_Register(t *testing.T) {
 	}
 
 	u := auth.User{}
-	err := service.Register(&u, "test", "test@test.com", "12345678")
+	err := service.Register(&u, "test", "fake name", "test@test.com", "12345678")
 
 	NoError(t, err)
 	NotZero(t, u.ID)
 	Equal(t, auth.UserName("test"), u.Name)
+	Equal(t, "fake name", u.FullName)
 	Equal(t, auth.Email("test@test.com"), u.Email)
 	NotEmpty(t, u.Secret)
 }
@@ -30,7 +31,7 @@ func TestUserService_Authenticate(t *testing.T) {
 	}
 
 	u := auth.User{}
-	_ = service.Register(&u, "test", "test@test.com", "12345678")
+	_ = service.Register(&u, "test", "fake name", "test@test.com", "12345678")
 
 	err := service.Authenticate(&u, "fake", "fake")
 	EqualError(t, err, auth.ErrBadCredentials.Error())
